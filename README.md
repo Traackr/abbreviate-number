@@ -1,7 +1,7 @@
 # abbreviate-number
 Javascript module to abbreviate number (3.7K, 7.8M, etc.)
 
-h1. `abbreviate(n, [params])`
+## `abbreviate(n, [params])`
 
 Examples:
 
@@ -36,7 +36,7 @@ Note that numbers are always rounded to the nearest value, that's why in the pre
 
 The default settings are meant to be what's needed in most analytics number display usage.
 
-h1. Use-Case: Rounding percentages
+## Use-Case: Rounding percentages
 Default settings works fine for rounding/abbreviating percentages. Because all values except 100% and above only have 2 digits, the default settings mean that 1 fractional digit will always be shown (unless it's zero):
 `0.7%`, `1.3%`, `43.8%`, `99.5%`
 
@@ -44,3 +44,6 @@ If you want such precision in lower values (below 10) but no decimals above 10, 
 `abbreviate(43.85,{meaningfulDigits:2}` returns `44`
 `abbreviate(0.52,{meaningfulDigits:2}` returns `0.5`
 
+## More info
+
+The `test/test.js` unit tests will show you many examples.
