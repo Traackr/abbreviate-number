@@ -61,7 +61,11 @@
   // --
   // You can alter the defaults by setting the 'noAbbrevUnder'
   // param when calling abbreviate().
-      DEFAULT_NO_ABBREV_UNDER = 0;
+      DEFAULT_NO_ABBREV_UNDER = 0,
+
+  // DO WE WANT TO ABBREVIATE VERY LOW NUMBER AS <0.1 (or similar
+  // based on "max fractional digits")?
+      DEFAULT_LOW_NUMBERS_AS_SMALLER_THAN = true;
 
   var UNITS = [ "", "K", "M", "B", "T" ];
 
@@ -89,6 +93,7 @@
         maxFractionalDigits = typeof(params.maxFractionalDigits) === "undefined" ? DEFAULT_MAX_FRACTIONAL_DIGITS : params.maxFractionalDigits,
         meaningfulDigits = typeof(params.meaningfulDigits) === "undefined" ? DEFAULT_MEANINGFUL_DIGITS : params.meaningfulDigits,
         noAbbrevUnder = typeof(params.noAbbrevUnder) === "undefined" ? DEFAULT_NO_ABBREV_UNDER : params.noAbbrevUnder,
+        lowNumbersAsSmallerThan = typeof(params.lowNumbersAsSmallerThan) === "undefined" ? DEFAULT_LOW_NUMBERS_AS_SMALLER_THAN : params.lowNumbersAsSmallerThan,
         rounded = n, unit, unitIndex, divider;
 
     if ( n < noAbbrevUnder ) {
@@ -132,9 +137,16 @@
       )
     );
 
+    // If too small, we may not want to render 0,
+    // but <0.1 (if 1 fractional digit).
+    if ( lowNumbersAsSmallerThan && rounded === 0 ) {
+      return "<" + Math.pow(10,-maxFractionalDigits) + unit;
+    }
+
     if ( addCommas ) {
       return commatize(rounded) + unit;
     }
+
     return "" + rounded + unit;
   }
 

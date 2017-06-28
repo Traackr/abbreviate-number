@@ -96,7 +96,7 @@ describe('analytics-rounding', function(){
         	abbrev(1,           { maxFractionalDigits: 2 } ).should.eql( "1" );
         	abbrev(0.1,         { maxFractionalDigits: 2 } ).should.eql( "0.1" );
         	abbrev(0.03,        { maxFractionalDigits: 2 } ).should.eql( "0.03" );
-        	abbrev(0.0045,      { maxFractionalDigits: 2 } ).should.eql( "0" );
+        	abbrev(0.0045,      { maxFractionalDigits: 2 } ).should.eql( "<0.01" );
         	abbrev(0.0099,      { maxFractionalDigits: 2 } ).should.eql( "0.01" );
         	done();
         });
@@ -109,6 +109,17 @@ describe('analytics-rounding', function(){
     	 	abbrev(71.234,      { maxFractionalDigits: 3, meaningfulDigits: 3 } ).should.eql( "71.2" );
     	 	abbrev(712.34,      { maxFractionalDigits: 3, meaningfulDigits: 3 } ).should.eql( "712" );
         	done();
+        });
+        it('should render very small numbers as <0.xxx', function(done) {
+            abbrev(0.001).should.eql( "<0.1" );
+            abbrev(0.001, { lowNumbersAsSmallerThan: false }).should.eql( "0" );
+            abbrev(0.001, { maxFractionalDigits: 2 }).should.eql( "<0.01" );
+            abbrev(0.001, { maxFractionalDigits: 2, lowNumbersAsSmallerThan: false }).should.eql( "0" );
+            abbrev(0.0999).should.eql( "0.1", "0.09999 rounds to 0.1" );
+            abbrev(0.05).should.eql( "0.1", "0.05 rounds to 0.1 (nearest)" );
+            abbrev(0.0499).should.eql( "<0.1", "0.04999 rounds to 0.0 (nearest)" );
+            abbrev(12, {forceUnit:"K"}).should.eql( "<0.1K" );
+            done();
         });
     });
 

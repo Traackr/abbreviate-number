@@ -1,6 +1,6 @@
 {
   "name": "abbreviate-number",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Javascript module to abbreviate number (3.7K, 7.8M, etc.)",
   "scripts": {
     "test": "./node_modules/.bin/mocha -R list"

@@ -44,6 +44,15 @@ If you want such precision in lower values (below 10) but no decimals above 10, 
 `abbreviate(43.85,{meaningfulDigits:2}` returns `44`
 `abbreviate(0.52,{meaningfulDigits:2}` returns `0.5`
 
+## Rendering very low numbers
+By default very low numbers, for example `0.03` are rendered as `<0.1` (or whatever corresponds to `maxFractionalDigits`). You can turn this off by setting `lowNumbersAsSmallerThan` to `false`:
+`abbreviate(0.01)` returns `<0.1`
+`abbreviate(0.003,{maxFractionalDigits:2})` returns `<0.01`
+`abbreviate(0.01,{lowNumbersAsSmallerThan:false})` returns `0`
+
+It even works when units are forced:
+`abbreviate(12,{forceUnit:"K"})` returns `<0.1K`
+
 ## More info
 
 The `test/test.js` unit tests will show you many examples.
